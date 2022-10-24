@@ -98,6 +98,6 @@ it('should have an error', function(done) {
 
 // save_track
 
-setTimeout(close, 4000);
+//setTimeout(close, 4000);
 
 //close();
