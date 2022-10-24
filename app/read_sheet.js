@@ -6,59 +6,64 @@ const {obs} = require('fnl');
 
 
 const read_sheet = (filePath = '../assigned/Track Import Test.xlsx') => obs((next, complete, error) => {
-    const res_rf = XLSX.readFile(filePath);
-    //let read_complete = false;
 
-    // Just Sheet1
+    (async() => {
+        const res_rf = XLSX.readFile(filePath);
+        //let read_complete = false;
 
-    // var address = XLSX.utils.decode_cell("A2");
+        // Just Sheet1
 
-    const sheet1 = res_rf.Sheets.Sheet1;
-    const [firstCell, lastCell] = sheet1["!ref"].split(':');
+        // var address = XLSX.utils.decode_cell("A2");
 
-    const cellNames = Object.keys(sheet1).filter(x => !x.startsWith('!'));
-    //console.log('cellNames', cellNames);
+        const sheet1 = res_rf.Sheets.Sheet1;
+        const [firstCell, lastCell] = sheet1["!ref"].split(':');
 
-    const cells = [];
-    let row = [], last_i_row = 0; 
+        const cellNames = Object.keys(sheet1).filter(x => !x.startsWith('!'));
+        //console.log('cellNames', cellNames);
 
-    // But the unnamed cells...? Or cells with nothing in them...?
+        const cells = [];
+        let row = [], last_i_row = 0; 
 
-    for (const cellName of cellNames) {
-        const cell = sheet1[cellName];
-        cell.name = cellName;
+        // But the unnamed cells...? Or cells with nothing in them...?
 
-        if (cell.name.length > 2) {
-            throw 'NYI';
-        } else {
-            const s_column = cellName.charAt(0);
-            const s_row = cellName.charAt(1);
+        for (const cellName of cellNames) {
+            const cell = sheet1[cellName];
+            cell.name = cellName;
 
-            //console.log('column.charCodeAt(0)', s_column.charCodeAt(0));
-            const i_column = s_column.charCodeAt(0) - 65;
-            const i_row = parseInt(s_row) - 1;
-            cell.position = [i_column, i_row];
-
-            //console.log('cell', cell);
-
-            cells.push(cell);
-            //console.log('i_row', i_row);
-            //console.log('last_i_row', last_i_row);
-            if (i_row !== last_i_row) {
-                next({'row': row});
-                row = [cell];
+            if (cell.name.length > 2) {
+                throw 'NYI';
             } else {
-                row.push(cell);
-            }
-            last_i_row = i_row;
-        }
-    }
-    next({'row': row});
-    // But that processing may then be async.
-    //  
+                const s_column = cellName.charAt(0);
+                const s_row = cellName.charAt(1);
 
-    //complete({cells: cells});
-    complete();
+                //console.log('column.charCodeAt(0)', s_column.charCodeAt(0));
+                const i_column = s_column.charCodeAt(0) - 65;
+                const i_row = parseInt(s_row) - 1;
+                cell.position = [i_column, i_row];
+
+                //console.log('cell', cell);
+
+                cells.push(cell);
+                //console.log('i_row', i_row);
+                //console.log('last_i_row', last_i_row);
+                if (i_row !== last_i_row) {
+                    next({'row': row});
+                    row = [cell];
+                } else {
+                    row.push(cell);
+                }
+                last_i_row = i_row;
+            }
+        }
+        next({'row': row});
+        // But that processing may then be async.
+        //  
+
+        //complete({cells: cells});
+        complete();
+    })();
+
+    
 });
 module.exports = read_sheet;
 

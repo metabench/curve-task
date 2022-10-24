@@ -18,9 +18,14 @@ it('should be asynchronous', function(done) {
 });
 */
 
+let num_tests_running = 0;
+const complete = () => {
+    
+    close();
+}
 
 it('should only provide event objects on next', function(done) {
-
+    num_tests_running++;
     const obs_injest = injest();
     
 
@@ -30,7 +35,10 @@ it('should only provide event objects on next', function(done) {
         assert.equal(type, 'event');
     });
     obs_injest.on('complete', () => {
+        num_tests_running--;
         done();
+        setTimeout(() => {if (num_tests_running === 0) complete();}, 0);
+        
     })
 
     
@@ -39,7 +47,7 @@ it('should only provide event objects on next', function(done) {
 
 
 it('should save a contract', function(done) {
-
+    num_tests_running++;
     const obs_injest = injest();
     let had_save_contract = false;
 
@@ -51,14 +59,16 @@ it('should save a contract', function(done) {
     });
     obs_injest.on('complete', () => {
         assert.equal(had_save_contract, true);
+        num_tests_running--;
         done();
+        setTimeout(() => {if (num_tests_running === 0) complete();}, 0);
     });
 
     
 });
 
 it('should save a track', function(done) {
-
+    num_tests_running++;
     const obs_injest = injest();
     let had_save_track = false;
 
@@ -70,7 +80,9 @@ it('should save a track', function(done) {
     });
     obs_injest.on('complete', () => {
         assert.equal(had_save_track, true);
+        num_tests_running--;
         done();
+        setTimeout(() => {if (num_tests_running === 0) complete();}, 0);
     });
 
     
@@ -78,7 +90,7 @@ it('should save a track', function(done) {
 
 
 it('should have an error', function(done) {
-
+    num_tests_running++;
     const obs_injest = injest();
     let had_error = false;
 
@@ -90,7 +102,9 @@ it('should have an error', function(done) {
     });
     obs_injest.on('complete', () => {
         assert.equal(had_error, true);
+        num_tests_running--;
         done();
+        setTimeout(() => {if (num_tests_running === 0) complete();}, 0);
     });
 
     
