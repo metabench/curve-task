@@ -66,9 +66,12 @@ const wipe = async () => {
 
 const close = () => mongoose.connection.close();
 
+const count_contracts = () => Contract.countDocuments();
+const count_tracks = () => Track.countDocuments();
+
 
 module.exports = {
-    save_track, save_contract, wipe, close
+    save_track, save_contract, wipe, close, count_contracts, count_tracks
 }
 
 if (require.main === module) {

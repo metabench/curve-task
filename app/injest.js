@@ -2,7 +2,7 @@ const read_sheet = require('./read_sheet');
 const {each} = require('lang-mini');
 const {obs} = require('fnl');
 
-const {save_track, save_contract, wipe, close} = require('./db');
+const {save_track, save_contract, wipe, close, count_contracts, count_tracks} = require('./db');
 
 //const injest = async() => {
 const injest = () => obs((next, complete, error) => {
@@ -146,4 +146,4 @@ const injest = () => obs((next, complete, error) => {
 
 });
 
-module.exports = {injest, close};
+module.exports = {injest, close, save_track, save_contract, wipe, count_contracts, count_tracks};

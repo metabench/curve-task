@@ -1,4 +1,4 @@
-const {injest, close} = require('./injest');
+const {injest, close, save_track, save_contract, wipe, count_contracts, count_tracks} = require('./injest');
 
 module.exports = {injest, close};
 
@@ -18,8 +18,14 @@ if (require.main === module) {
             }
         });
 
-        obs_injest.on('complete', () => {
+        obs_injest.on('complete', async() => {
             console.log('errors', errors);
+
+            console.log('count_contracts', await count_contracts());
+            console.log('count_tracks', await count_tracks());
+
+
+
             close();
         });
     })();

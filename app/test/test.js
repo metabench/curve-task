@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-const {injest, close} = require('../index');
+const {injest, close, count_contracts, count_tracks} = require('../index');
 
 /*
 describe('Array', function () {
@@ -31,7 +31,7 @@ it('should only provide event objects on next', function(done) {
 
     obs_injest.on('next', data => {
         const {type, name} = data;
-        console.log('name', name);
+        //console.log('name', name);
         assert.equal(type, 'event');
     });
     obs_injest.on('complete', () => {
@@ -89,7 +89,7 @@ it('should save a track', function(done) {
 });
 
 
-it('should have an error', function(done) {
+it('should have an error event', function(done) {
     num_tests_running++;
     const obs_injest = injest();
     let had_error = false;
@@ -109,9 +109,3 @@ it('should have an error', function(done) {
 
     
 });
-
-// save_track
-
-//setTimeout(close, 4000);
-
-//close();
