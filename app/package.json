@@ -1,0 +1,28 @@
+{
+    "name": "curve-test-app",
+    "main": "index.js",
+    "license": "MIT",
+    "dependencies": {
+      "xlsx": "^0.18.5",
+      "mongoose": "^6.6.7",
+      "lang-mini": "^0.0.26",
+      "fnl": "^0.0.22"
+    },
+    "devDependencies": {
+      "mocha": "^10.1.0"
+    },
+    "scripts": {
+      "test": "mocha"
+    },
+    "engines": {
+      "node": ">=16.0.0"
+    },
+    "description": "Excel file ingestion.",
+    "author": "James Vickers <james@metabench.com>",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/metabench/curve-test-app.git"
+    },
+    "version": "0.0.1"
+  }
+  
